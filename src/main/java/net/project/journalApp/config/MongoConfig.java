@@ -1,0 +1,16 @@
+package net.project.journalApp.config;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class MongoConfig {
+    @Bean
+    public MongoClient mongoClient() {
+        return MongoClients.create(
+                "mongodb+srv://username:password12345@cluster0.48znqfw.mongodb.net/journaldb?retryWrites=true&w=majority&tls=true"
+        );
+    }
+}
