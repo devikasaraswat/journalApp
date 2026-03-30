@@ -10,7 +10,7 @@ public class MongoConfig {
     @Bean
     public MongoClient mongoClient() {
         return MongoClients.create(
-                "mongodb+srv://username:password12345@cluster0.48znqfw.mongodb.net/journaldb?retryWrites=true&w=majority&tls=true"
+                ""
         );
     }
 }
