@@ -1,9 +1,6 @@
 package net.project.journalApp.entity;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -18,12 +15,13 @@ import java.util.List;
 @Document(collection="users")
 //@Getter
 //@Setter
-//@NoArgsConstructor
-//@AllArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 //@ToString
 //@EqualsAndHashCode
 @Data
 @Builder
+
 public class User {
     @Id
     private ObjectId id;
@@ -39,5 +37,9 @@ public class User {
     private List<JournalEntry> journalEntries = new ArrayList<>();
 
     private List<String> roles;
+
+    private String email;
+
+    private boolean sentimentAnalysis;
 
 }
