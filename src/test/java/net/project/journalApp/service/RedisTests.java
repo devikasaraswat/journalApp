@@ -1,21 +1,23 @@
 package net.project.journalApp.service;
 
-
-import net.project.journalApp.scheduler.UserScheduler;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 
 @SpringBootTest
-public class UserSchedulerTests {
+public class RedisTests {
 
     @Autowired
-    private UserScheduler userScheduler;
+    RedisTemplate redisTemplate;
 
     @Disabled
     @Test
-    public void testFetchUsersAndSendSAEmail(){
-        userScheduler.fetchUsersAndSendSAEmail();
+    void testSendEmail(){
+        redisTemplate.opsForValue().set("email","gmail@email.com");
+        Object email = redisTemplate.opsForValue().get("salary");
+        int a=1;
     }
+
 }

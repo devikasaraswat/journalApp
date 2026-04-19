@@ -28,13 +28,10 @@ public class UserScheduler {
     private UserRepositoryImpl userRepository;
 
     @Autowired
-    private SentimentAnalysisService sentimentAnalysisService;
-
-    @Autowired
     private AppCache appCache;
 
    // @Scheduled(cron = "0 0 9 * * SUN")
-    @Scheduled(cron = "0 * * ? * *")
+    //@Scheduled(cron = "0 * * ? * *")
     public void fetchUsersAndSendSAEmail() {
         List<User> users = userRepository.getUsersForSA();
         for (User user : users) {
