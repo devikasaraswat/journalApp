@@ -5,9 +5,11 @@ import net.project.journalApp.cache.AppCache;
 import net.project.journalApp.entity.JournalEntry;
 import net.project.journalApp.entity.User;
 import net.project.journalApp.enums.Sentiment;
+import net.project.journalApp.model.SentimentData;
 import net.project.journalApp.repository.UserRepositoryImpl;
 import net.project.journalApp.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +31,9 @@ public class UserScheduler {
 
     @Autowired
     private AppCache appCache;
+
+    @Autowired
+    private KafkaTemplate<String, SentimentData> kafkaTemplate;
 
    // @Scheduled(cron = "0 0 9 * * SUN")
     //@Scheduled(cron = "0 * * ? * *")
@@ -53,7 +58,9 @@ public class UserScheduler {
                 }
             }
             if (mostFrequentSentiment != null) {
-                emailService.sendEmail(user.getEmail(), "Sentiment for previous week", mostFrequentSentiment.toString());
+                SentimentData sentimentData = SentimentData.builder().email(user.getEmail()).sentiment("Sentiment for previous week "+ mostFrequentSentiment.toString()).build();
+                //emailService.sendEmail(user.getEmail(), "Sentiment for previous week", mostFrequentSentiment.toString());
+                kafkaTemplate.send("weekly-sentiments",sentimentData.getEmail(),sentimentData);
             }
         }
     }
